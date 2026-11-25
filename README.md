@@ -1,69 +1,67 @@
-# ಅಚ್ಚಗನ್ನಡ ಸುದ್ದಿ ಪರಿವರ್ತಕ (Accagannada News Converter v6.0)
+# ಅಚ್ಚಗನ್ನಡ ಸುದ್ದಿ ಪರಿವರ್ತಕ (Accagannada News Converter)
 
-A standalone Chrome/Edge/Brave Manifest V3 extension powered by the vocabulary already maintained in the KannadaWords repository.
+A standalone Manifest V3 browser extension for conservative, offline Kannada text conversion. Its vocabulary is maintained in [tulasi68/Kannadawords](https://github.com/tulasi68/Kannadawords).
 
-## Vocabulary source
+## Conversion policy
 
-The bundled vocabulary.json is generated from the repository-root newwords.txt file. The current source contains 4,559 rows across three existing table layouts:
+- Matches the longest exact word or phrase in the bundled vocabulary.
+- Converts only entries with one unambiguous preferred alternative.
+- Leaves ambiguous and unknown forms unchanged.
+- Preserves alternatives and usage notes for review.
+- Does not guess noun suffixes or verb conjugations. Morphology remains disabled until Kannada-specific paradigms are reviewed.
 
-- 2,593 Accha Kannada / nuance rows
-- 1,310 native-word table rows
-- 656 Sanskrit/loan-word master-table rows
+The current source contains 4,559 rows across three table layouts. The generated index records the exact source blob SHA and build statistics. Vocabulary is bundled locally, so conversion works offline after installation.
 
-The build currently produces 3,974 distinct source forms. The bundle is split into four compact JSON shards so the browser can load it reliably. Repeated source forms are merged without silently discarding alternatives or notes. Where source rows disagree on the preferred alternative, the entry is marked ambiguous and is not automatically converted.
+## Build and test
 
-## Conversion strategy
+Requirements: Node.js 20 or newer.
 
-1. Match the longest exact phrase or word form from the vocabulary.
-2. Automatically replace only entries with one unambiguous preferred alternative.
-3. Preserve alternatives and usage/meaning notes for tooltips and review.
-4. Leave ambiguous or unknown words unchanged.
-5. Keep the 656 master-table entries as root candidates for future morphology work, but do not treat them as approved grammatical roots automatically.
+```sh
+npm run build:vocabulary
+npm test
+```
 
-**Morphology is deliberately review-gated.** newwords.txt contains a mixture of roots and already-inflected forms. Guessing roots by stripping endings can corrupt Kannada. The extension therefore uses exact source forms today. Add a noun or verb paradigm to morphology-rules.json only after its Kannada forms have been reviewed and regression-tested. Do not bulk-generate inflected vocabulary entries.
+The build fetches `newwords.txt` from the selected Kannadawords ref (default: `main`) and regenerates the local index, shards, and inactive root-candidate list. To build from another branch or tag:
 
-## Build the bundled vocabulary
+```sh
+KANNADAWORDS_REF=feature/editor-extension-v6 npm run build:vocabulary
+```
 
-From the repository root, run:
+This is a build-time fetch only. The extension makes no runtime request to Kannadawords.
 
-    node editorExtension/build-vocabulary.mjs
+## Install locally
 
-This reads newwords.txt and regenerates editorExtension/vocabulary.json.
+1. Open `chrome://extensions` or `edge://extensions`.
+2. Enable **Developer mode**.
+3. Select **Load unpacked**.
+4. Choose this repository's root directory.
+5. Open a Kannada news page and use the extension popup.
 
-## Install
+## Features
 
-1. Open chrome://extensions (or edge://extensions).
-2. Enable Developer mode.
-3. Choose Load unpacked.
-4. Select the editorExtension folder.
-5. Open a Kannada news page and test the converter from the extension popup.
-
-## Popup features
-
-- Enable/disable conversion.
-- Show/hide source and alternative tooltips.
-- Add custom exact word mappings.
-- Import Markdown, CSV, TSV or JSON vocabulary files.
+- Enable or disable conversion.
+- Show or hide source/alternative tooltips.
+- Add custom exact-word mappings.
+- Import Markdown, CSV, TSV, or JSON dictionaries.
 - Export the bundled and user-imported dictionary.
-- Test a word or sentence using the same conversion engine.
+- Test a word or sentence in the popup.
 
-## Safety and limitations
+## Privacy and limitations
 
-- Conversion is local in the browser; page text is not sent to a server.
-- Editable fields, code, scripts and styles are skipped.
-- Exact phrases are preferred over individual word matches.
-- A phrase split across separate HTML text nodes may not match.
-- Ambiguous preferred alternatives and unknown words remain unchanged.
-- General Kannada morphology and automatic verb conjugation are not claimed until reviewed paradigms and test cases exist.
+- Page text is processed locally; it is not sent to a server.
+- Editable fields, code, scripts, and styles are skipped.
+- Phrases split across separate HTML text nodes may not match.
+- Ambiguous and unknown forms remain unchanged.
+- General Kannada morphology and automatic verb conjugation are not claimed.
 
-## Files
+## Main files
 
-- vocabulary.json — small index listing the generated shards and build statistics.
-- vocabulary-01.json through vocabulary-04.json — compact vocabulary data shards.
-- root-candidates.json — 656 inactive candidates for later root/paradigm review.
-- build-vocabulary.mjs — reproducible build from newwords.txt.
-- vocabulary-import.js — Markdown/CSV/TSV/JSON importer.
-- trie_converter.js — phrase-first exact-form trie.
-- morphology-rules.json — explicit approval gate for morphology.
-- content.js — safe DOM traversal and local conversion.
-- popup.html / popup.js — controls, importer and live tester.
+- `manifest.json` — browser extension manifest.
+- `content.js` — safe DOM traversal and conversion.
+- `trie_converter.js` — exact-form, phrase-first conversion engine.
+- `vocabulary-import.js` — dictionary importer and normalization.
+- `popup.html` / `popup.js` — controls, importer, and tester.
+- `build-vocabulary.mjs` — reproducible vocabulary build.
+- `vocabulary.json` and `vocabulary-*.json` — local vocabulary index and shards.
+- `root-candidates.json` — inactive candidates for future review.
+- `morphology-rules.json` — explicit morphology approval gate.
