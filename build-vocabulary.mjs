@@ -67,7 +67,7 @@ for (let index = 0; index < sourceRows.length; index++) {
   const forms = String(row[1] || "").split(/\s*\/\s*/u).map(value => value.trim().normalize("NFC")).filter(Boolean);
   const primaryOptions = parseArray(row[2], `primary suggestions at CSV row ${index + 2}`);
   const alternatives = parseArray(row[3], `alternative suggestions at CSV row ${index + 2}`);
-  if (!forms.length || !primaryOptions.length) continue;
+  if (!forms.length || (!primaryOptions.length && !alternatives.length)) continue;
   const notes = [
     row[6] ? "Naturalness fit: " + row[6] : "",
     row[7] ? "Dravidian root field: " + row[7] : "",
@@ -113,7 +113,7 @@ for (let offset = 0; offset < entries.length; offset += SHARD_SIZE) {
 fs.writeFileSync(path.join(here, "root-candidates.json"), "[]\n");
 
 const activeShards = new Set(shards);
-for (const file of fs.readdirSync(here).filter(name => /^vocabulary-\d+\\.json$/u.test(name))) {
+for (const file of fs.readdirSync(here).filter(name => /^vocabulary-\d+\.json$/u.test(name))) {
   if (!activeShards.has(file)) fs.unlinkSync(path.join(here, file));
 }
 const index = {
