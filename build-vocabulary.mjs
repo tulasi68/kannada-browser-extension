@@ -5,18 +5,34 @@ import vocabularyImport from "./vocabulary-import.js";
 
 const { parseMarkdownRows, buildVocabularyIndex } = vocabularyImport;
 const here = path.dirname(fileURLToPath(import.meta.url));
-const repoRoot = path.resolve(here, "..");
-const sourceText = fs.readFileSync(path.join(repoRoot, "newwords.txt"), "utf8");
-const rows = parseMarkdownRows(sourceText);
-const entries = buildVocabularyIndex(rows);
+const sourceRepository = "tulasi68/Kannadawords";
+const sourcePath = "newwords.txt";
+const sourceRef = process.env.KANNADAWORDS_REF || "main";
+const metadataUrl = `https://api.github.com/repos/${sourceRepository}/contents/${sourcePath}?ref=${encodeURIComponent(sourceRef)}`;
 
-// A compact tuple format keeps each extension resource small:
-// [inputWord, primary, alternatives[], notes[], ambiguous(0|1)].
+async function fetchResponse(url, label) {
+  const response = await fetch(url, { headers: { Accept: "application/vnd.github+json" } });
+  if (!response.ok) throw new Error(`${label}: HTTP ${response.status} (${url})`);
+  return response;
+}
+
+const metadata = await (await fetchResponse(metadataUrl, "Vocabulary metadata request failed")).json();
+if (!metadata.sha || !metadata.download_url) {
+  throw new Error("GitHub did not return a source blob SHA and download URL.");
+}
+const sourceResponse = await fetchResponse(metadata.download_url, "Vocabulary download failed");
+const sourceText = await sourceResponse.text();
+const rows = parseMarkdownRows(sourceText);
+if (!rows.length) throw new Error("No vocabulary rows parsed; existing generated files were not replaced.");
+
+const entries = buildVocabularyIndex(rows);
+if (!entries.length) throw new Error("Vocabulary index is empty; existing generated files were not replaced.");
+
 const SHARD_SIZE = 1000;
 const shards = [];
 for (let offset = 0; offset < entries.length; offset += SHARD_SIZE) {
   const number = String(shards.length + 1).padStart(2, "0");
-  const file = "vocabulary-" + number + ".json";
+  const file = `vocabulary-${number}.json`;
   const tuples = entries.slice(offset, offset + SHARD_SIZE).map(entry => [
     entry.inputWord, entry.primary, entry.alternatives, entry.notes, entry.ambiguous ? 1 : 0
   ]);
@@ -24,15 +40,12 @@ for (let offset = 0; offset < entries.length; offset += SHARD_SIZE) {
   shards.push(file);
 }
 
-// Root candidates are stored separately and are not used for conversion until
-// their part of speech and Kannada inflection paradigm have been reviewed.
 const rootMap = new Map();
 for (const row of rows.filter(item => item.sourceFormat === "master-table")) {
-  const key = row.inputWord;
-  const previous = rootMap.get(key);
+  const previous = rootMap.get(row.inputWord);
   if (!previous) {
-    rootMap.set(key, [
-      key, row.primary, [...(row.alternatives || [])],
+    rootMap.set(row.inputWord, [
+      row.inputWord, row.primary, [...(row.alternatives || [])],
       row.note || "", row.category || "", row.sourceLine
     ]);
   } else {
@@ -43,18 +56,19 @@ for (const row of rows.filter(item => item.sourceFormat === "master-table")) {
 }
 fs.writeFileSync(path.join(here, "root-candidates.json"), JSON.stringify([...rootMap.values()]) + "\n");
 
-// Remove stale shards if the source vocabulary shrinks.
-const active = new Set(shards);
+const activeShards = new Set(shards);
 for (const file of fs.readdirSync(here).filter(name => /^vocabulary-\d+\.json$/u.test(name))) {
-  if (!active.has(file)) fs.unlinkSync(path.join(here, file));
+  if (!activeShards.has(file)) fs.unlinkSync(path.join(here, file));
 }
 
 const index = {
   schemaVersion: 2,
   format: "compact-arrays-v1",
   dataset: "KannadaWords newwords.txt",
-  sourcePath: "newwords.txt",
-  sourceBlobSha: "fb331f455a64d694a7f08ec6c178c5e4fa69730e",
+  sourceRepository,
+  sourcePath,
+  sourceRef,
+  sourceBlobSha: metadata.sha,
   policy: {
     exactForms: "Source vocabulary forms are matched exactly.",
     ambiguousForms: "Entries with conflicting preferred alternatives are not auto-converted.",
@@ -71,4 +85,4 @@ const index = {
   rootCandidatesFile: "root-candidates.json"
 };
 fs.writeFileSync(path.join(here, "vocabulary.json"), JSON.stringify(index, null, 2) + "\n");
-console.log(JSON.stringify(index.stats));
+console.log(JSON.stringify({ sourceRef, sourceBlobSha: metadata.sha, ...index.stats }, null, 2));
