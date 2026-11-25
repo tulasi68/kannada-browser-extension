@@ -40,7 +40,7 @@ function parseArray(value, label) {
   } catch {}
   // Plain-text legacy cells are slash-delimited. A malformed bracketed array
   // is quarantined as ambiguous instead of being guessed or auto-converted.
-  return raw.startsWith("[") ? [] : raw.split(/\\s*\\/\\s*/u).map(item => item.trim()).filter(Boolean);
+  return raw.startsWith("[") ? [] : raw.split(/\s*\/\s*/u).map(item => item.trim()).filter(Boolean);
 }
 
 const metadata = await (await fetchResponse(metadataUrl, "Master CSV metadata request failed")).json();
