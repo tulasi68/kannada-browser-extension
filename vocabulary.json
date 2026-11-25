@@ -15,10 +15,7 @@
     "sourceRows": 8470,
     "uniqueForms": 7045,
     "autoConvertibleForms": 5508,
-    "ambiguousForms": 1537,
-    "rowsWithQuarantinedPrimary": 54,
-    "plainTextPrimaryCells": 6900,
-    "plainTextAlternativeCells": 6944
+    "ambiguousForms": 1537
   },
   "shards": [
     "vocabulary-01.json",
