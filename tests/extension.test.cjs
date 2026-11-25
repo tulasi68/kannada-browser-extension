@@ -71,7 +71,7 @@ test("real vocabulary examples obey exact-match and ambiguity policy", () => {
   assert.equal(trie.convertText("ಪ್ರಜಾಪ್ರಭುತ್ವದ"), "ಮಂದಿಯಾಳ್ವಿಕೆಯ");
   assert.equal(trie.convertText("ಅಂತಃಪ್ರಜ್ಞೆಯನ್ನು"), "ಒಳ್ತಿಳುವಳಿಕೆಯನ್ನು");
   assert.equal(trie.convertText("ಸಹಭಾಗಿತ್ವ"), "ಸಹಭಾಗಿತ್ವ");
-  assert.equal(trie.convertText("ಅಪರಿಚಿತ ಪದ"), "ಅಪರಿಚಿತ ಪದ");
+  assert.equal(trie.convertText("ಕ್ವಾಂಟಂಅಪರಿಚಿತಪದ"), "ಕ್ವಾಂಟಂಅಪರಿಚಿತಪದ");
 });
 
 test("morphology candidates remain inactive pending linguistic review", () => {
