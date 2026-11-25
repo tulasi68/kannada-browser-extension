@@ -33,11 +33,14 @@ function parseCsv(text) {
 }
 
 function parseArray(value, label) {
-  let parsed;
-  try { parsed = JSON.parse(value || "[]"); }
-  catch { throw new Error(`Invalid JSON array in ${label}`); }
-  if (!Array.isArray(parsed)) throw new Error(`Expected JSON array in ${label}`);
-  return parsed.map(item => String(item || "").trim()).filter(Boolean);
+  const raw = String(value || "").trim();
+  try {
+    const parsed = JSON.parse(raw || "[]");
+    if (Array.isArray(parsed)) return parsed.map(item => String(item || "").trim()).filter(Boolean);
+  } catch {}
+  // Plain-text legacy cells are slash-delimited. A malformed bracketed array
+  // is quarantined as ambiguous instead of being guessed or auto-converted.
+  return raw.startsWith("[") ? [] : raw.split(/\\s*\\/\\s*/u).map(item => item.trim()).filter(Boolean);
 }
 
 const metadata = await (await fetchResponse(metadataUrl, "Master CSV metadata request failed")).json();
@@ -72,7 +75,7 @@ for (let index = 0; index < sourceRows.length; index++) {
   ].filter(Boolean);
   for (const inputWord of forms) {
     if (!byForm.has(inputWord)) byForm.set(inputWord, {
-      inputWord, primary: primaryOptions[0], alternatives: [], notes: [],
+      inputWord, primary: primaryOptions[0] || alternatives[0] || "", alternatives: [], notes: [],
       ambiguous: primaryOptions.length !== 1, primaryChoices: new Set(primaryOptions)
     });
     const entry = byForm.get(inputWord);
