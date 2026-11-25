@@ -67,7 +67,7 @@ for (let index = 0; index < sourceRows.length; index++) {
   const forms = String(row[1] || "").split(/\s*\/\s*/u).map(value => value.trim().normalize("NFC")).filter(Boolean);
   const primaryOptions = parseArray(row[2], `primary suggestions at CSV row ${index + 2}`);
   const alternatives = parseArray(row[3], `alternative suggestions at CSV row ${index + 2}`);
-  if (!forms.length || (!primaryOptions.length && !alternatives.length)) continue;
+  if (!forms.length) continue;
   const notes = [
     row[6] ? "Naturalness fit: " + row[6] : "",
     row[7] ? "Dravidian root field: " + row[7] : "",
