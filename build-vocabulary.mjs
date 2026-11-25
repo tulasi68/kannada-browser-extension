@@ -61,7 +61,7 @@ const byForm = new Map();
 for (let index = 0; index < sourceRows.length; index++) {
   const row = sourceRows[index];
   const id = String(row[0] || "").trim();
-  const forms = String(row[1] || "").split(/\\s*\\/\\s*/u).map(value => value.trim().normalize("NFC")).filter(Boolean);
+  const forms = String(row[1] || "").split(/\s*\/\s*/u).map(value => value.trim().normalize("NFC")).filter(Boolean);
   const primaryOptions = parseArray(row[2], `primary suggestions at CSV row ${index + 2}`);
   const alternatives = parseArray(row[3], `alternative suggestions at CSV row ${index + 2}`);
   if (!forms.length || !primaryOptions.length) continue;
@@ -104,13 +104,13 @@ for (let offset = 0; offset < entries.length; offset += SHARD_SIZE) {
   const tuples = entries.slice(offset, offset + SHARD_SIZE).map(entry => [
     entry.inputWord, entry.primary, entry.alternatives, entry.notes, entry.ambiguous ? 1 : 0
   ]);
-  fs.writeFileSync(path.join(here, file), JSON.stringify(tuples) + "\\n");
+  fs.writeFileSync(path.join(here, file), JSON.stringify(tuples) + "\n");
   shards.push(file);
 }
-fs.writeFileSync(path.join(here, "root-candidates.json"), "[]\\n");
+fs.writeFileSync(path.join(here, "root-candidates.json"), "[]\n");
 
 const activeShards = new Set(shards);
-for (const file of fs.readdirSync(here).filter(name => /^vocabulary-\\d+\\.json$/u.test(name))) {
+for (const file of fs.readdirSync(here).filter(name => /^vocabulary-\d+\\.json$/u.test(name))) {
   if (!activeShards.has(file)) fs.unlinkSync(path.join(here, file));
 }
 const index = {
@@ -132,5 +132,5 @@ const index = {
   shards,
   rootCandidatesFile: "root-candidates.json"
 };
-fs.writeFileSync(path.join(here, "vocabulary.json"), JSON.stringify(index, null, 2) + "\\n");
+fs.writeFileSync(path.join(here, "vocabulary.json"), JSON.stringify(index, null, 2) + "\n");
 console.log(JSON.stringify({ sourceRef, sourceBlobSha: metadata.sha, ...index.stats }, null, 2));
