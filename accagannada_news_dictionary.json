@@ -1,0 +1,28 @@
+{
+  "phrases": {
+    "ಸಂಚಾರ ದಟ್ಟಣೆ": { "primary": "ಓಡಾಟದ ನೂಕುನುಗ್ಗಲು", "alts": ["ಬಂಡಿಗಳ ಸಾಲು"], "note": "Traffic jam" },
+    "ವಿರೋಧ ಪಕ್ಷ": { "primary": "ಎದುರು ಗುಂಪು", "alts": ["ಎದುರು ಸಾಲು"], "note": "Opposition party" },
+    "ನೇರ ಪ್ರಸಾರ": { "primary": "ನೇರ ಬಿತ್ತರ", "alts": ["ಕಣ್ಣಾರೆ ಬಿತ್ತರ"], "note": "Live broadcast" },
+    "ವಿಶೇಷ ವರದಿ": { "primary": "ನೆಟ್ಟರಿಕೆ", "alts": ["ತನಿ ಬರೆಹ"], "note": "Special report" }
+  },
+  "roots": {
+    "ಸರ್ಕಾರ": { "primary": "ಆಳ್ವಿಕೆ", "alts": ["ಒಕ್ಕೂಟ"], "note": "Government" },
+    "ತೀರ್ಪು": { "primary": "ಕಟ್ಟಳೆ", "alts": ["ಕೊನೆಯ ಮಾತು"], "note": "Verdict (-u stem test)" },
+    "ಪ್ರಕರಣ": { "primary": "ಸಂಗತಿ", "alts": ["ನಡೆದದ್ದು", "ಎಡರು"], "note": "Case / incident" },
+    "ಆರೋಪ": { "primary": "ಹೊರಿಸುವಿಕೆ", "alts": ["ದೂರು"], "note": "Allegation / accuse" },
+    "ಪ್ರತಿಪಾದನೆ": { "primary": "ಎತ್ತಿಹಿಡಿಯುವಿಕೆ", "alts": ["ಮುಂದಿಡುವಿಕೆ"], "note": "Advocating / asserting" },
+    "ಖಂಡನೆ": { "primary": "ತಳ್ಳಿಹಾಕುವಿಕೆ", "alts": ["ಎದುರಿಸುವಿಕೆ"], "note": "Condemnation" },
+    "ಘೋಷಣೆ": { "primary": "ಸಾರಿಕೆ", "alts": ["ಹೊರಡಿಕೆ"], "note": "Announcement / declaration" },
+    "ತನಿಖೆ": { "primary": "ಹುಡುಕಾಟ", "alts": ["ಅರಸುವಿಕೆ"], "note": "Investigation" },
+    "ಬಂಧನ": { "primary": "ಸೆರೆಹಿಡಿತ", "alts": ["ಕಟ್ಟು"], "note": "Arrest" },
+    "ಅನುಮತಿ": { "primary": "ಒಪ್ಪಿಗೆ", "alts": ["ಸಮ್ಮತಿ"], "note": "Permission" },
+    "ಪ್ರತಿಭಟನೆ": { "primary": "ಎದುರಾಟ", "alts": ["ಕೂಗು"], "note": "Protest" },
+    "ಮಾಹಿತಿ": { "primary": "ತಿಳಿವು", "alts": ["ಅರಿವು"], "note": "Information" },
+    "ಪರಿಹಾರ": { "primary": "ನೆರವು", "alts": ["ತುಂಬಿಕೊಡುವಿಕೆ"], "note": "Compensation / relief" },
+    "ಪ್ರಜಾಪ್ರಭುತ್ವ": { "primary": "ಮಂದಿಯಾಳ್ವಿಕೆ", "alts": ["ಜನರಾಳ್ವಿಕೆ", "ನಾಡಾಳ್ವಿಕೆ"], "note": "Democracy" },
+    "ವಿಶ್ವಸಂಸ್ಥೆ": { "primary": "ಜಗದೊಕ್ಕೂಟ", "alts": ["ಲೋಕಕೂಟ"], "note": "United Nations" },
+    "ಪ್ರಾಧಿಕಾರ": { "primary": "ಆಡಳಿತ ಕೂಟ", "alts": ["ಅಧಿಕಾರ ಮಣೆ"], "note": "Authority" },
+    "ಸ್ವತಃ": { "primary": "ತಾನೇ", "alts": ["ತಾವೇ", "ಸ್ವಂತವಾಗಿ"], "note": "Oneself" },
+    "ಬಹುಶಃ": { "primary": "ಇರಬಹುದು", "alts": ["ಬಹಳಮಟ್ಟಿಗೆ", "ಒಂದುವೇಳೆ"], "note": "Probably / perhaps" }
+  }
+}

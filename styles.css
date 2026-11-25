@@ -1,0 +1,10 @@
+.accagannada-highlight {
+  border-bottom: 1.5px dotted #b71c1c;
+  cursor: help;
+  transition: background-color 0.15s ease;
+}
+
+.accagannada-highlight:hover {
+  background-color: rgba(255, 215, 0, 0.28);
+  border-radius: 2px;
+}
