@@ -1,0 +1,57 @@
+{
+  "manifest_version": 3,
+  "name": "ಅಚ್ಚಗನ್ನಡ ಸುದ್ದಿ (Accagannada News Converter)",
+  "version": "6.0.0",
+  "description": "Offline Kannada news text converter using the KannadaWords vocabulary, with exact-form matching and review-gated morphology.",
+  "permissions": [
+    "storage",
+    "unlimitedStorage"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "accagannada-news@dravidian.local",
+      "strict_min_version": "109.0"
+    }
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "ಅಚ್ಚಗನ್ನಡ ಪರಿವರ್ತಕ (Accagannada Converter)",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "vocabulary.json",
+        "vocabulary-*.json",
+        "morphology-rules.json"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "trie_converter.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "schemaVersion": 1,
+  "policy": "No generic suffix rules are enabled by default. Add a rule only with reviewed Kannada source/target paradigms and regression examples.",
+  "approvedRootParadigms": []
+}

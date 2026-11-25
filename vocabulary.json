@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 2,
+  "format": "compact-arrays-v1",
+  "dataset": "KannadaWords newwords.txt",
+  "sourcePath": "newwords.txt",
+  "sourceBlobSha": "fb331f455a64d694a7f08ec6c178c5e4fa69730e",
+  "policy": {
+    "exactForms": "Source vocabulary forms are matched exactly.",
+    "ambiguousForms": "Entries with conflicting preferred alternatives are not auto-converted.",
+    "morphology": "Root candidates remain inactive until a Kannada-specific paradigm is reviewed and explicitly approved."
+  },
+  "stats": {
+    "sourceRows": 4559,
+    "uniqueForms": 3974,
+    "autoConvertibleForms": 3736,
+    "ambiguousForms": 238,
+    "rootCandidates": 656
+  },
+  "shards": [
+    "vocabulary-01.json",
+    "vocabulary-02.json",
+    "vocabulary-03.json",
+    "vocabulary-04.json"
+  ],
+  "rootCandidatesFile": "root-candidates.json"
+}
