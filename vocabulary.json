@@ -1,28 +1,34 @@
 {
   "schemaVersion": 2,
   "format": "compact-arrays-v1",
-  "dataset": "KannadaWords newwords.txt",
-  "sourcePath": "newwords.txt",
-  "sourceBlobSha": "fb331f455a64d694a7f08ec6c178c5e4fa69730e",
+  "dataset": "Kannadawords MergedMasterCopy_10000.csv",
+  "sourceRepository": "tulasi68/Kannadawords",
+  "sourcePath": "MergedMasterCopy_10000.csv",
+  "sourceRef": "main",
+  "sourceBlobSha": "1275a3f749a64fd8acf8d90350a0f9ee2933e1ba",
   "policy": {
-    "exactForms": "Source vocabulary forms are matched exactly.",
-    "ambiguousForms": "Entries with conflicting preferred alternatives are not auto-converted.",
-    "morphology": "Root candidates remain inactive until a Kannada-specific paradigm is reviewed and explicitly approved."
+    "exactForms": "Only explicit source forms in the master CSV are matched.",
+    "ambiguousForms": "Multiple preferred primary options or malformed primary cells are never auto-converted.",
+    "morphology": "No suffix stripping, conjugation, or inferred morphology is performed."
   },
   "stats": {
-    "sourceRows": 4559,
-    "uniqueForms": 3974,
-    "autoConvertibleForms": 3736,
-    "ambiguousForms": 238,
-    "rootCandidates": 656
+    "sourceRows": 8470,
+    "uniqueForms": 7045,
+    "autoConvertibleForms": 5508,
+    "ambiguousForms": 1537,
+    "rowsWithQuarantinedPrimary": 54,
+    "plainTextPrimaryCells": 6900,
+    "plainTextAlternativeCells": 6944
   },
   "shards": [
     "vocabulary-01.json",
     "vocabulary-02.json",
     "vocabulary-03.json",
-    "vocabulary-04.json"
+    "vocabulary-04.json",
+    "vocabulary-05.json",
+    "vocabulary-06.json",
+    "vocabulary-07.json",
+    "vocabulary-08.json"
   ],
-  "rootCandidatesFile": "root-candidates.json",
-  "sourceRepository": "tulasi68/Kannadawords",
-  "sourceRef": "main"
+  "rootCandidatesFile": "root-candidates.json"
 }
