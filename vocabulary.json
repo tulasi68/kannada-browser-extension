@@ -22,5 +22,7 @@
     "vocabulary-03.json",
     "vocabulary-04.json"
   ],
-  "rootCandidatesFile": "root-candidates.json"
+  "rootCandidatesFile": "root-candidates.json",
+  "sourceRepository": "tulasi68/Kannadawords",
+  "sourceRef": "main"
 }
