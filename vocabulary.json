@@ -8,7 +8,7 @@
   "sourceBlobSha": "1275a3f749a64fd8acf8d90350a0f9ee2933e1ba",
   "policy": {
     "exactForms": "Only explicit source forms in the master CSV are matched.",
-    "ambiguousForms": "Multiple preferred primary options or malformed primary cells are never auto-converted.",
+    "ambiguousForms": "All preferred primary options are retained as alternatives; entries with multiple options or malformed primary cells are never auto-converted.",
     "morphology": "No suffix stripping, conjugation, or inferred morphology is performed."
   },
   "stats": {
