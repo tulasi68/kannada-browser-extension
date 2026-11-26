@@ -88,10 +88,18 @@ for (let index = 0; index < sourceRows.length; index++) {
 }
 const entries = [...byForm.values()].map(entry => {
   const choices = [...entry.primaryChoices];
+  const primary = choices.length === 1 ? choices[0] : entry.primary;
+  // Keep every valid primary candidate as a visible alternative when a source
+  // row offers several equally acceptable forms. Never discard good options
+  // just because the entry is not safe for automatic replacement.
+  const alternatives = [...new Set([
+    ...choices.filter(choice => choice !== primary),
+    ...entry.alternatives.filter(choice => choice !== primary)
+  ])];
   return {
     inputWord: entry.inputWord,
-    primary: choices.length === 1 ? choices[0] : entry.primary,
-    alternatives: entry.alternatives,
+    primary,
+    alternatives,
     notes: entry.notes,
     ambiguous: entry.ambiguous,
     autoConvert: !entry.ambiguous
