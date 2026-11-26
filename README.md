@@ -6,8 +6,9 @@ A standalone Manifest V3 browser extension for conservative, offline Kannada tex
 
 - Matches the longest exact word or phrase in the bundled vocabulary.
 - Converts only entries with one unambiguous preferred alternative.
-- Leaves ambiguous and unknown forms unchanged.
-- Preserves alternatives and usage notes for review.
+- Includes all source forms, including entries with multiple valid Kannada suggestions.
+- Leaves ambiguous and unknown forms unchanged rather than choosing arbitrarily.
+- Preserves every primary candidate and alternative native option, plus usage notes, for review.
 - Does not guess noun suffixes or verb conjugations. Morphology remains disabled until Kannada-specific paradigms are reviewed.
 
 The single vocabulary source is `tulasi68/Kannadawords/MergedMasterCopy_10000.csv` (8,470 rows; 12 columns). The build validates its header, row count, and JSON-array suggestion columns, then records the exact source blob SHA and build statistics. Vocabulary is bundled locally, so conversion works offline after installation.
