@@ -131,7 +131,7 @@ const index = {
   sourceRepository, sourcePath, sourceRef, sourceBlobSha: metadata.sha,
   policy: {
     exactForms: "Only explicit source forms in the master CSV are matched.",
-    ambiguousForms: "Multiple preferred primary options for a source form are never auto-converted.",
+    ambiguousForms: "All preferred primary options are retained as alternatives; entries with multiple options or malformed primary cells are never auto-converted.",
     morphology: "No suffix stripping, conjugation, or inferred morphology is performed."
   },
   stats: {
